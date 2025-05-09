@@ -11,9 +11,7 @@ import { AiOutlineNotification } from "react-icons/ai";
 function NotificationDropdown() {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.user.userId);
-  const notifications = useSelector(
-    (state) => state.notification.notifications
-  );
+  const notifications = useSelector((state) => state.notification.notifications);
 
   useEffect(() => {
     if (userId) {
@@ -28,49 +26,53 @@ function NotificationDropdown() {
     };
     dispatch(updateNotificationsById(updateNotification));
   };
+
   return (
     <>
       <a
-        className="nav-link dropdown-toggle"
+        className="nav-link position-relative"
         href="#"
         id="notification-dropdown"
         role="button"
         data-bs-toggle="dropdown"
         aria-expanded="false"
       >
-        <Bell />
+        <Bell size={20} className="text-light" />
+        {notifications && notifications.length > 0 && (
+          <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            {notifications.length}
+          </span>
+        )}
       </a>
+
       <ul
-        className="dropdown-menu dropdown-menu-end"
+        className="dropdown-menu dropdown-menu-end shadow-sm"
         aria-labelledby="notification-dropdown"
+        style={{ minWidth: "280px" }}
       >
         {notifications && notifications.length ? (
           [...notifications]
             .reverse()
             .slice(-5)
-            .map((notification) => {
-              return (
-                <li key={notification.id}>
-                  <a className="dropdown-item" href="#">
-                    <AiOutlineNotification className="me-2" />
-                    <span className="me-2">{notification.message}</span>
-                    <CiSquareRemove
-                      size={20}
-                      className="text-danger"
-                      onClick={() => {
-                        handleOnRead(notification.id);
-                      }}
-                    />
-                  </a>
-                </li>
-              );
-            })
+            .map((notification) => (
+              <li key={notification.id} className="px-2 py-2 border-bottom">
+                <div className="d-flex justify-content-between align-items-start">
+                  <div className="text-dark">
+                    <AiOutlineNotification className="me-2 text-primary" />
+                    <span>{notification.message}</span>
+                  </div>
+                  <CiSquareRemove
+                    size={20}
+                    className="text-danger cursor-pointer"
+                    onClick={() => handleOnRead(notification.id)}
+                    title="Mark as read"
+                    style={{ cursor: "pointer" }}
+                  />
+                </div>
+              </li>
+            ))
         ) : (
-          <li>
-            <a className="dropdown-item" href="#">
-              <span className="me-2">No Notifications yet</span>
-            </a>
-          </li>
+          <li className="px-3 py-2 text-muted">No Notifications yet</li>
         )}
       </ul>
     </>

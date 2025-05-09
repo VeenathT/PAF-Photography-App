@@ -7,17 +7,8 @@ import { logout } from "../../app/slices/user.slice";
 import Profile from "../../Pages/Profile";
 import NotificationDropdown from "../NotificationDropdown";
 import UserImage from "../../assets/user.jpeg";
+
 Modal.setAppElement("div");
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-  },
-};
 
 function Navbar() {
   const dispatch = useDispatch();
@@ -47,15 +38,16 @@ function Navbar() {
       navigate("/login");
     }
   }, [dispatch, user.loginStatus]);
+
   return (
     <div>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light p-3">
+      <nav className="navbar navbar-expand-lg bg-dark text-light p-3 shadow-sm">
         <div className="container-fluid">
-          <Link className="navbar-brand" to="/">
+          <Link className="navbar-brand fw-bold text-white fs-4" to="/">
             PhotographyLife
           </Link>
           <button
-            className="navbar-toggler"
+            className="navbar-toggler border-0"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarSupportedContent"
@@ -63,69 +55,66 @@ function Navbar() {
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <span className="navbar-toggler-icon"></span>
+            <span className="navbar-toggler-icon text-light"></span>
           </button>
+
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0"></ul>
-            {!user.loginStatus && (
-              <>
-                <div className="d-flex">
-                  <Link to="/login" className="btn btn-warning me-2">
-                    Login
-                  </Link>
-                  <Link to="/signup" className="btn btn-primary me-2">
-                    Signup
-                  </Link>
-                </div>
-              </>
-            )}
-            {user.loginStatus && (
-              <>
-                <div className="d-flex">
-                  <Link className="nav-link me-2 text-dark" to="/user">
-                    Home
-                  </Link>
-                  <Link className="nav-link me-2 text-dark" to="/sharedposts">
-                    Shared
-                  </Link>
-                  <Link
-                    onClick={() => {
-                      openModal();
-                    }}
-                    className="text-dark text-decoration-none p-2"
-                  >
-                    <img
-                      src={
-                        user?.user?.profileImage
-                          ? user.user.profileImage
-                          : UserImage
-                      }
-                      className="user-profile-image img-fluid me-3"
-                      alt="Profile"
-                    />
-                    <span className="p-2 fw-bold">{user?.user?.username}</span>
-                  </Link>
-                  <NotificationDropdown />
 
-                  <button
-                    className="btn btn-outline-success"
-                    onClick={() => {
-                      dispatch(logout());
-                    }}
-                  >
-                    logout
-                  </button>
-                </div>
-              </>
+            {!user.loginStatus && (
+              <div className="d-flex">
+                <Link to="/login" className="btn btn-outline-light me-2 fw-semibold">
+                  Login
+                </Link>
+                <Link to="/signup" className="btn btn-primary me-2 fw-semibold">
+                  Signup
+                </Link>
+              </div>
+            )}
+
+            {user.loginStatus && (
+              <div className="d-flex align-items-center">
+                <Link className="nav-link me-3 text-light fw-semibold" to="/user">
+                  Home
+                </Link>
+                <Link className="nav-link me-3 text-light fw-semibold" to="/sharedposts">
+                  Shared
+                </Link>
+
+                <Link
+                  onClick={openModal}
+                  className="text-light text-decoration-none d-flex align-items-center"
+                >
+                  <img
+                    src={
+                      user?.user?.profileImage ? user.user.profileImage : UserImage
+                    }
+                    className="rounded-circle border border-light me-2"
+                    alt="Profile"
+                    width="36"
+                    height="36"
+                  />
+                  <span className="fw-bold">{user?.user?.username}</span>
+                </Link>
+
+                <NotificationDropdown />
+
+                <button
+                  className="btn btn-outline-danger ms-3 fw-semibold"
+                  onClick={() => dispatch(logout())}
+                >
+                  Logout
+                </button>
+              </div>
             )}
           </div>
         </div>
       </nav>
+
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
-        // style={customStyles}
-        contentLabel="Example Modal"
+        contentLabel="Profile Modal"
       >
         <div className="p-2">
           <Profile closeModal={closeModal} />
