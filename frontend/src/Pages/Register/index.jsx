@@ -17,7 +17,7 @@ function Register() {
     <div className="container mt-5 d-flex justify-content-center align-items-center">
       <div className="card shadow-lg p-4" style={{ maxWidth: "450px", width: "100%" }}>
         <div className="card-body">
-          <h2 className="text-center mb-4 text-primary fw-bold">Join PhotographyLife</h2>
+          <h2 className="text-center mb-4 text-primary fw-bold">SignUp </h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label className="form-label fw-semibold">Username</label>
