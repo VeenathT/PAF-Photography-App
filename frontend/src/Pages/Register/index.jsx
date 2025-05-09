@@ -19,7 +19,7 @@ function Register() {
     <div className="container mt-5 mb-5 card">
       <div className="card-body">
         <form onSubmit={handleSubmit}>
-          <h1 className="mt-2">SIGNUP | INSTAGRAM</h1>
+          <h1 className="mt-2">Photography Life | SIGNUP</h1>
           <div className="mt-5 mb-3">
             <label className="form-label">Username</label>
             <input
