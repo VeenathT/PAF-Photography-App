@@ -34,7 +34,7 @@ function UserPosts() {
                     setPostOptionSelected(false);
                   }}
                 >
-                  CLICK TO VIEW SHARED POSTS
+                  CLICK TO VIEW SHARED PHOTOS
                 </button>
               </div>
             ) : (
@@ -45,7 +45,7 @@ function UserPosts() {
                     setPostOptionSelected(true);
                   }}
                 >
-                  CLICK TO VIEW POSTS
+                  CLICK TO VIEW PHOTOS
                 </button>
               </div>
             )}
@@ -65,7 +65,7 @@ function UserPosts() {
         )}
         {!postOptionSelected && (
           <div className="col-6">
-            <h3>SHARED POSTS</h3>
+            <h3>SHARED PHOTOS</h3>
             <hr />
             <SharedPostsList posts={postshare.posts} fetchType="GET_ALL_POSTS_USER"/>
           </div>
