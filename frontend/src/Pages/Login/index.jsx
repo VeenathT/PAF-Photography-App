@@ -29,7 +29,7 @@ function Login() {
               onChange={(e) => setUsername(e.target.value)}
             />
             <div id="emailHelp" className="form-text">
-              We'll never share your username with anyone 
+              We'll never share your username with anyone els
             </div>
           </div>
           <div className="mb-3">
