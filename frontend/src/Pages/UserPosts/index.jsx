@@ -45,7 +45,7 @@ function UserPosts() {
                     setPostOptionSelected(true);
                   }}
                 >
-                  CLICK TO VIEW POSTS
+                  CLICK TO VIEW POST
                 </button>
               </div>
             )}
