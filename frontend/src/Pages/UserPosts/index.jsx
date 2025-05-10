@@ -21,56 +21,43 @@ function UserPosts() {
   }, [dispatch, userId]);
 
   return (
-    <div>
-      <div className="row">
-        <div className="col-3"></div>
-        <div className="col-6">
-          <div className="row mt-2">
+    <div className="container mt-5 mb-5">
+      <div className="row justify-content-center">
+        <div className="col-lg-8">
+          <div className="d-flex justify-content-center mb-4">
             {postOptionSelected ? (
-              <div className="col-12 mt-2">
-                <button
-                  className="btn btn-warning w-100"
-                  onClick={() => {
-                    setPostOptionSelected(false);
-                  }}
-                >
-                  CLICK TO VIEW SHARED PHOTOS
-                </button>
-              </div>
+              <button
+                className="btn btn-outline-primary fw-semibold w-100"
+                onClick={() => setPostOptionSelected(false)}
+              >
+                CLICK TO VIEW SHARED PHOTOS
+              </button>
             ) : (
-              <div className="col-12 mt-2">
-                <button
-                  className="btn btn-warning w-100"
-                  onClick={() => {
-                    setPostOptionSelected(true);
-                  }}
-                >
-                  CLICK TO VIEW PHOTOS
-                </button>
-              </div>
+              <button
+                className="btn btn-outline-primary fw-semibold w-100"
+                onClick={() => setPostOptionSelected(true)}
+              >
+                CLICK TO VIEW PHOTOS
+              </button>
+            )}
+          </div>
+
+          <div className="mt-4">
+            {postOptionSelected ? (
+              <>
+                <h4 className="text-dark fw-bold">Creaters Photos</h4>
+                <hr />
+                <Posts posts={post.posts} fetchType="GET_ALL_POSTS_USER" />
+              </>
+            ) : (
+              <>
+                <h4 className="text-dark fw-bold">Shared Photos</h4>
+                <hr />
+                <SharedPostsList posts={postshare.posts} fetchType="GET_ALL_POSTS_USER" />
+              </>
             )}
           </div>
         </div>
-
-        <div className="col-3"></div>
-      </div>
-      <div className="row mt-5">
-        <div className="col-3"></div>
-        {postOptionSelected && (
-          <div className="col-6">
-            <h3>POSTS</h3>
-            <hr />
-            <Posts posts={post.posts} fetchType="GET_ALL_POSTS_USER"/>
-          </div>
-        )}
-        {!postOptionSelected && (
-          <div className="col-6">
-            <h3>SHARED PHOTOS</h3>
-            <hr />
-            <SharedPostsList posts={postshare.posts} fetchType="GET_ALL_POSTS_USER"/>
-          </div>
-        )}
-        <div className="col-3"></div>
       </div>
     </div>
   );

@@ -24,20 +24,16 @@ function PostAdd() {
     setCaption("");
     setImgLink("");
     fileInputRef.current.value = "";
-
   };
 
   const uploadImage = (e) => {
     const file = e.target.files[0];
-
     if (!file) {
       alert("Please upload an image first!");
+      return;
     }
 
     const storageRef = ref(storage, `/posts/${file.name}`);
-
-    // progress can be paused and resumed. It also exposes progress updates.
-    // Receives the storage reference and the file to upload.
     const uploadTask = uploadBytesResumable(storageRef, file);
 
     uploadTask.on(
@@ -47,49 +43,56 @@ function PostAdd() {
       },
       (err) => console.log(err),
       () => {
-        // download url
         getDownloadURL(uploadTask.snapshot.ref).then((url) => {
           setImgLink(url);
         });
       }
     );
   };
-  
+
   return (
-    <div className="container mb-3 card">
-      <div className="card-body">
-        <form onSubmit={handleSubmit}>
-          <h1 className="mt-2">Create Post</h1>
-          <div className="mt-5 mb-3">
-            <label className="form-label">Caption</label>
-            <input
-              type="text"
-              className="form-control"
-              value={caption}
-              onChange={(e) => setCaption(e.target.value)}
-            />
-          </div>
-          <div className="mb-3">
-            {imgLink && (
-              <img
-                src={imgLink}
-                className="img-fluid me-3"
-                alt="Profile"
+    <div className="container mb-4">
+      <div className="card shadow-lg border-0">
+        <div className="card-body p-4">
+          <h2 className="mb-4 text-primary fw-bold">Share Your Photo</h2>
+          <form onSubmit={handleSubmit}>
+            <div className="mb-4">
+              <label className="form-label fw-semibold">Caption</label>
+              <input
+                type="text"
+                className="form-control rounded-pill px-3 py-2"
+                value={caption}
+                onChange={(e) => setCaption(e.target.value)}
+                placeholder="Write something about your photo..."
               />
+            </div>
+
+            <div className="mb-4">
+              <label className="form-label fw-semibold">Upload Image</label>
+              <input
+                type="file"
+                className="form-control"
+                onChange={uploadImage}
+                ref={fileInputRef}
+              />
+            </div>
+
+            {imgLink && (
+              <div className="mb-4">
+                <img
+                  src={imgLink}
+                  alt="Uploaded preview"
+                  className="img-fluid rounded shadow"
+                  style={{ maxHeight: "400px" }}
+                />
+              </div>
             )}
 
-            <input
-              type="file"
-              className="form-control"
-              onChange={(e) => uploadImage(e)}
-              ref={fileInputRef} 
-            />
-          </div>
-
-          <button type="submit" className="btn btn-success">
-            CREATE
-          </button>
-        </form>
+            <button type="submit" className="btn btn-success fw-bold rounded-pill px-4 py-2">
+              CREATE
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );

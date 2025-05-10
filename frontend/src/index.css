@@ -1,56 +1,71 @@
+/* GLOBAL STYLES */
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: rgb(141, 137, 150);
+  background: linear-gradient(to right, #e0ecf8, #c8d9f0); /* light, crisp background */
+  color: #212529;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: 'Courier New', Courier, monospace;
 }
 
-.user-profile-image{
-  width: 30px;
-  height: 30px;
+/* PROFILE IMAGES */
+.user-profile-image,
+.post-comment-profile-image {
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #0d6efd;
 }
 
-.post-profile-image{
-  width: 50px;
-  height: 50px;
+.post-profile-image {
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #6f42c1;
 }
 
-.post-comment-profile-image{
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-}
-
-.comment-div{
-  background-color: rgb(243, 225, 65);
-}
-
-.react-icons:hover{
-  color: rgb(0, 97, 154);
-  transform: scale(1.1);
-}
-
-.newusercard {
-  transition: transform 0.2s ease;
-  background-color: rgb(241, 241, 241);
-}
-
-.newusercard:hover {
-  transform: scale(1.1);
-}
-
-.profile-image{
+.profile-image {
   width: 150px;
   height: 150px;
   border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #198754;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+/* COMMENT CARD STYLES */
+.comment-div {
+  background-color: #fff3cd;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-left: 4px solid #ffc107;
+}
+
+/* REACT ICONS HOVER EFFECT */
+.react-icons:hover {
+  color: #198754;
+  transform: scale(1.15);
+  transition: all 0.2s ease-in-out;
+}
+
+/* SUGGESTED USER CARDS */
+.newusercard {
+  background-color: #f0f8ff;
+  border-left: 4px solid #0d6efd;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.newusercard:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 14px rgba(0, 123, 255, 0.15);
 }

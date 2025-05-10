@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser, updateUserById } from "../../app/actions/user.actions";
-import storage from "../../util/firebaseConfig";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { getUser } from "../../app/actions/user.actions";
 
 function UserProfile() {
   const dispatch = useDispatch();
@@ -19,84 +17,58 @@ function UserProfile() {
   useEffect(() => {
     dispatch(getUser(user.userId));
   }, [dispatch]);
+
   return (
-    <div>
-      <div className="container">
-        <div className="row mt-5">
-          <div className="col-md-6 offset-md-3">
-            <form>
-              <div className="mb-3 text-center">
-                {profileImage && (
-                  <img
-                    src={profileImage}
-                    className="img-fluid me-3 profile-image"
-                    alt="Profile"
-                  />
-                )}
-              </div>
-              <div className="mb-3">
-                <label htmlFor="username" className="form-label">
-                  Username
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="username"
-                  placeholder="Enter your username"
-                  value={username}
-                  readOnly
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="contactNumber" className="form-label">
-                  Contact Number
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="contactNumber"
-                  placeholder="Enter your contact number"
-                  value={contactNumber}
-                  onChange={(e) => {
-                    setContactNumber(e.target.value);
-                  }}
-                  readOnly
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="email" className="form-label">
-                  Email address
-                </label>
-                <input
-                  type="email"
-                  className="form-control"
-                  id="email"
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                  }}
-                  readOnly
-                />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="country" className="form-label">
-                  Country
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="country"
-                  placeholder="Enter your country"
-                  value={country}
-                  onChange={(e) => {
-                    setCountry(e.target.value);
-                  }}
-                  readOnly
-                />
-              </div>
-            </form>
-          </div>
+    <div className="container" style={{ maxWidth: "500px" }}>
+      <div className="card border-0 shadow-sm p-4">
+        <div className="text-center mb-4">
+          {profileImage && (
+            <img
+              src={profileImage}
+              className="img-fluid profile-image"
+              alt="Profile"
+            />
+          )}
+        </div>
+
+        <div className="mb-3">
+          <label className="form-label fw-semibold">Username</label>
+          <input
+            type="text"
+            className="form-control"
+            value={username}
+            readOnly
+          />
+        </div>
+
+        <div className="mb-3">
+          <label className="form-label fw-semibold">Contact Number</label>
+          <input
+            type="text"
+            className="form-control"
+            value={contactNumber}
+            readOnly
+          />
+        </div>
+
+        <div className="mb-3">
+          <label className="form-label fw-semibold">Email</label>
+          <input
+            type="email"
+            className="form-control"
+            value={email}
+            readOnly
+          />
+        </div>
+
+        <div className="mb-3">
+          <label className="form-label fw-semibold">Country</label>
+          <input
+            type="text"
+            className="form-control"
+            value={country}
+            readOnly
+          />
         </div>
       </div>
     </div>

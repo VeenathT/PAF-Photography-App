@@ -4,10 +4,7 @@ import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { GiCancel } from "react-icons/gi";
 import { MdDoneOutline } from "react-icons/md";
 import UserImage from "../../assets/user.jpeg";
-import {
-  getPosts,
-  getPostsByUserId,
-} from "../../app/actions/post.actions";
+import { getPosts, getPostsByUserId } from "../../app/actions/post.actions";
 import {
   deleteCommentById,
   updateCommentById,
@@ -15,11 +12,11 @@ import {
 
 function Comment({ postId, comment, postUserId, fetchType }) {
   const dispatch = useDispatch();
-  const [commentEditable, setCommentEditable] = useState(false);
   const user = useSelector((state) => state.user);
-  const [text, setText] = React.useState(comment.text);
+  const [commentEditable, setCommentEditable] = useState(false);
+  const [text, setText] = useState(comment.text);
 
-  const handleSubmitComment = async() => {
+  const handleSubmitComment = async () => {
     const updatedComment = {
       id: comment.id,
       postId: postId,
@@ -27,98 +24,85 @@ function Comment({ postId, comment, postUserId, fetchType }) {
       text: text,
     };
     dispatch(updateCommentById(updatedComment));
-    if (fetchType === "GET_ALL_POSTS") {
-      await dispatch(getPosts());
-    }
-    if (fetchType === "GET_ALL_USER_POSTS") {
-      await dispatch(getPostsByUserId(postUserId));
-    }
-    if (fetchType === "GET_ALL_POSTS_USER") {
-      await dispatch(getPostsByUserId(postUserId));
-    }
-    setText(text);
-    setCommentEditable(false)
-  };
-  return (
-    <div className="row mb-2" key={comment.id}>
-      <div className="col-10 comment-div">
-        {commentEditable ? (
-          <input
-            type="text"
-            className="form-control comment-div"
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-          />
-        ) : (
-          <p className="mb-2 p-2">
-            <img
-              src={comment.profileImage ? comment.profileImage : UserImage}
-              className="post-comment-profile-image img-fluid me-3"
-              alt="Profile"
-            />
-            <strong className="fw-bold me-3">{comment.username}</strong>{" "}
-            {comment.text}
-          </p>
-        )}
-      </div>
 
-      <div className="col-2 comment-div">
-        <div className="row p-2">
-          <div className="row">
-            <div className="col-6">
-              {commentEditable ? (
-                <div className="col-1">
-                  <GiCancel
-                    className="react-icons"
-                    size={25}
-                    onClick={() => {
-                      setCommentEditable(false);
-                    }}
-                  />
-                </div>
-              ) : (
-                user.userId === comment.userId && (
-                  <AiFillEdit
-                    className="react-icons"
-                    size={25}
-                    onClick={() => {
-                      setCommentEditable(true);
-                    }}
-                  />
-                )
-              )}
-            </div>
-            <div className="col-6">
-              {commentEditable ? (
-                <MdDoneOutline
-                  className="react-icons"
-                  size={25}
-                  onClick={() => {
-                    handleSubmitComment();
-                  }}
+    if (fetchType === "GET_ALL_POSTS") await dispatch(getPosts());
+    if (fetchType === "GET_ALL_USER_POSTS") await dispatch(getPostsByUserId(postUserId));
+    if (fetchType === "GET_ALL_POSTS_USER") await dispatch(getPostsByUserId(postUserId));
+
+    setCommentEditable(false);
+  };
+
+  const handleDelete = async () => {
+    await dispatch(deleteCommentById(comment.id));
+    if (fetchType === "GET_ALL_POSTS") await dispatch(getPosts());
+    if (fetchType === "GET_ALL_USER_POSTS") await dispatch(getPostsByUserId(postUserId));
+    if (fetchType === "GET_ALL_POSTS_USER") await dispatch(getPostsByUserId(postUserId));
+  };
+
+  return (
+    <div className="bg-light rounded p-3 mb-2 shadow-sm d-flex align-items-start">
+      <img
+        src={comment.profileImage || UserImage}
+        className="rounded-circle me-3"
+        style={{ width: "40px", height: "40px", objectFit: "cover" }}
+        alt="Profile"
+      />
+
+      <div className="flex-grow-1">
+        <div className="d-flex justify-content-between align-items-start">
+          <div>
+            <strong className="text-dark">{comment.username}</strong>
+            {commentEditable ? (
+              <input
+                type="text"
+                className="form-control form-control-sm mt-1"
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+              />
+            ) : (
+              <p className="mb-1">{comment.text}</p>
+            )}
+          </div>
+
+          <div className="d-flex align-items-center ms-3">
+            {commentEditable ? (
+              <>
+                <GiCancel
+                  className="text-secondary me-2"
+                  size={18}
+                  style={{ cursor: "pointer" }}
+                  onClick={() => setCommentEditable(false)}
+                  title="Cancel"
                 />
-              ) : (
-                (user.userId === comment.userId ||
-                  user.userId === postUserId) && (
-                  <AiFillDelete
-                    className="react-icons"
-                    size={25}
-                    onClick={async () => {
-                      await dispatch(deleteCommentById(comment.id));
-                      if (fetchType === "GET_ALL_POSTS") {
-                        await dispatch(getPosts());
-                      }
-                      if (fetchType === "GET_ALL_USER_POSTS") {
-                        await dispatch(getPostsByUserId(postUserId));
-                      }
-                      if (fetchType === "GET_ALL_POSTS_USER") {
-                        await dispatch(getPostsByUserId(postUserId));
-                      }
-                    }}
-                  />
-                )
-              )}
-            </div>
+                <MdDoneOutline
+                  className="text-success"
+                  size={18}
+                  style={{ cursor: "pointer" }}
+                  onClick={handleSubmitComment}
+                  title="Save"
+                />
+              </>
+            ) : (
+              user.userId === comment.userId && (
+                <AiFillEdit
+                  className="text-primary me-2"
+                  size={18}
+                  style={{ cursor: "pointer" }}
+                  onClick={() => setCommentEditable(true)}
+                  title="Edit"
+                />
+              )
+            )}
+
+            {(user.userId === comment.userId || user.userId === postUserId) && !commentEditable && (
+              <AiFillDelete
+                className="text-danger"
+                size={18}
+                style={{ cursor: "pointer" }}
+                onClick={handleDelete}
+                title="Delete"
+              />
+            )}
           </div>
         </div>
       </div>
