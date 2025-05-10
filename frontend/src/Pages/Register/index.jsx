@@ -29,7 +29,7 @@ function Register() {
               onChange={(e) => setUsername(e.target.value)}
             />
             <div id="emailHelp" className="form-text">
-              We'll never share your username with anyone else.
+             Don't worry We'll never share your username with anyone else.
             </div>
           </div>
           <div className="mb-3">
