@@ -36,7 +36,7 @@ function UserProfile() {
               </div>
               <div className="mb-3">
                 <label htmlFor="username" className="form-label">
-                  Usern
+                  Usernam
                 </label>
                 <input
                   type="text"
